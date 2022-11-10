@@ -1,7 +1,7 @@
 # Личный проект «Readme»
 
 * Студент: [Анна Маркелова](https://up.htmlacademy.ru/nodejs-2/2/user/1761107).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Сальников] (https://up.htmlacademy.ru/profession/fullstack/2/nodejs-2/2/tutors).
 
 ---
 
