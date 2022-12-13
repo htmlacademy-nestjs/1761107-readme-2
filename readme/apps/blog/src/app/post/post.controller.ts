@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { fillObject } from '@readme/core';
 import { CreatePostLinkDto } from './dto/create-post-link.dto';
@@ -6,6 +6,8 @@ import { CreatePostPhotoDto } from './dto/create-post-photo.dto';
 import { CreatePostQuoteDto } from './dto/create-post-quote.dto';
 import { CreatePostTextDto } from './dto/create-post-text.dto';
 import { CreatePostVideoDto } from './dto/create-post-video.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
+import { PostEntity } from './post.entity';
 import { PostService } from './post.service';
 import { PostRdo } from './rdo/post.rdo';
 
@@ -18,9 +20,6 @@ export class PostController {
     private readonly postService: PostService
   ) {}
 
-  // create, delete, edit, get, copy
-  //get posts all, by user owner
-
   @Post()
   @ApiResponse({
     status: HttpStatus.CREATED,
@@ -32,24 +31,44 @@ export class PostController {
     return fillObject(PostRdo, newComment);
   }
 
-  // @Delete(':id')
-  // @ApiResponse({
-  //   status: HttpStatus.OK,
-  //   description: 'The comment has been deleted.'
-  // })
-  // async delete (@Param('id') id: string){
-  //   return fillObject(CommentRdo, await this.commentService.deleteComment(id));
-  // }
+  @Delete(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The post has been deleted.'
+  })
+  async delete (@Param('id') id: string){
+    return fillObject(PostRdo, await this.postService.deletePost(id));
+  }
 
-  // @Get(':id')
-  // @ApiResponse({
-  //   type: CommentRdo,
-  //   status: HttpStatus.OK,
-  //   description: 'Comment found'
-  // })
-  // async show(@Param('id') id: string) {
-  //   const existComment = await this.commentService.getComment(id);
-  //   return fillObject(CommentRdo, existComment);
-  // }
+  @Get(':id')
+  @ApiResponse({
+    type: PostRdo,
+    status: HttpStatus.OK,
+    description: 'Post found'
+  })
+  async show(@Param('id') id: string) {
+    const existPost = await this.postService.getPost(id);
+    return fillObject(PostRdo, existPost);
+  }
+
+  @Patch(':id')
+  @ApiResponse({
+    type: PostRdo,
+    status: HttpStatus.CREATED,
+    description: 'Post'
+  })
+  async updatePost (@Param('id') id: string, @Body() dto: UpdatePostDto) {
+    return fillObject(PostRdo, await this.postService.updatePost(id, dto));
+  }
+
+  @Get()
+  @ApiResponse({
+    type: [PostRdo],
+    status: HttpStatus.OK,
+    description: 'Post'
+  })
+  async getPosts (){
+     return fillObject(PostRdo, await this.postService.getPosts());
+  }
 
 }

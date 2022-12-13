@@ -17,8 +17,9 @@ export class PostMemoryRepository implements CRUDRepository<PostEntity, string, 
   }
 
   public async update(id: string, item: PostEntity): Promise<Post> {
-    throw new Error('Method not implemented.');
-  }
+    this.repository[id] = {...item.toObject()};
+    return this.findById(id);
+}
 
   private repository: { [key: string]: Post } = {};
 
@@ -33,6 +34,10 @@ export class PostMemoryRepository implements CRUDRepository<PostEntity, string, 
   public async destroy(id: string): Promise<void> {
     delete this.repository[id];
   }
+
+  public async getPosts(): Promise<Post[]> {
+    return Object.values(this.repository);
+ }
 
 }
 

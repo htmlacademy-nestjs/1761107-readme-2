@@ -6,6 +6,7 @@ import { CreatePostPhotoDto } from './dto/create-post-photo.dto';
 import { CreatePostQuoteDto } from './dto/create-post-quote.dto';
 import { CreatePostTextDto } from './dto/create-post-text.dto';
 import { CreatePostVideoDto } from './dto/create-post-video.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 import { PostMemoryRepository } from './post-memory.repository';
 import { PostEntity } from './post.entity';
 
@@ -13,7 +14,7 @@ import { PostEntity } from './post.entity';
 export class PostService {
 
   constructor(
-    private readonly postMemory: PostMemoryRepository
+    private readonly postRepository: PostMemoryRepository
   ) { }
 
   private postEntity: PostEntity;
@@ -73,8 +74,8 @@ export class PostService {
     return new PostEntity(newPost);
   }
 
-//   async createPost(dto: CreatePostVideoDto | CreatePostTextDto | CreatePostQuoteDto | CreatePostPhotoDto | CreatePostLinkDto,
-//     postType: PostType) {
+  //   async createPost(dto: CreatePostVideoDto | CreatePostTextDto | CreatePostQuoteDto | CreatePostPhotoDto | CreatePostLinkDto,
+  //     postType: PostType) {
 
   async createPost(dto, postType: PostType) {
 
@@ -94,11 +95,33 @@ export class PostService {
       case PostType.Link:
         this.postEntity = this.fillLinkPost(dto);
         break;
-        default: throw new Error('Unknown PostType');
+      default: throw new Error('Unknown PostType');
     }
 
-    return await this.postMemory.create(this.postEntity);
+    return await this.postRepository.create(this.postEntity);
 
+  }
+
+  async getPost(id: string) {
+    return this.postRepository.findById(id);
+  }
+
+  async deletePost(id: string) {
+    return this.postRepository.destroy(id);
+  }
+
+  async updatePost(id: string, dto: UpdatePostDto) {
+    const existPost = await this.postRepository.findById(id);
+    const updatedPost = Object.assign(existPost, dto);
+    if (!existPost) {
+      throw new Error('Post not found');
+    }
+    const post = new PostEntity(updatedPost);
+    return this.postRepository.update(id, post);
+  }
+
+  async getPosts() {
+    return this.postRepository.getPosts();
   }
 
 }
