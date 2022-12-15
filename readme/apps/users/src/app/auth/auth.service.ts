@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { BlogUserMemoryRepository } from '../blog-user/blog-user-memory.repository';
 import { BlogUserEntity } from '../blog-user/blog-user.entity';
+import { BlogUserRepository } from '../blog-user/blog-user.repository';
 import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from './auth.constant';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -8,7 +8,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly blogUserRepository: BlogUserMemoryRepository
+    private readonly blogUserRepository: BlogUserRepository
   ) {}
 
   async register(dto: CreateUserDto) {
