@@ -8,6 +8,9 @@ import { User } from '@readme/shared-types';
 export class BlogUserModel extends Document implements User {
 
   @Prop()
+  public _id: string;
+
+  @Prop()
   public avatar: string;
 
   @Prop({

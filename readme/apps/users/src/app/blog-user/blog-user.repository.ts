@@ -5,6 +5,7 @@ import { BlogUserEntity } from './blog-user.entity';
 import {InjectModel} from '@nestjs/mongoose';
 import { BlogUserModel } from './blog-user.model';
 import {Model} from 'mongoose';
+import * as crypto from 'crypto';
 
 @Injectable()
  export class BlogUserRepository implements CRUDRepository<BlogUserEntity, string, User> {
@@ -14,7 +15,7 @@ import {Model} from 'mongoose';
   }
 
   public async create(item: BlogUserEntity): Promise<User> {
-    const newBlogUser = new this.blogUserModel(item);
+    const newBlogUser = new this.blogUserModel({ ...item.toObject(), _id: crypto.randomUUID() });
     return newBlogUser.save();
   }
 
@@ -22,9 +23,9 @@ import {Model} from 'mongoose';
     this.blogUserModel.deleteOne({id});
   }
 
-  public async findById(id: string): Promise<User | null> {
+  public async findById(_id: string): Promise<User | null> {
     return this.blogUserModel
-      .findOne({id})
+      .findOne({_id})
       .exec();
   }
 
