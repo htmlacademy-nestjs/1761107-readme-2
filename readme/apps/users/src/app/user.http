@@ -4,7 +4,7 @@ POST http://localhost:3333/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user1@notfound.local",
+  "email": "user@notfound.local",
   "login": "Keks",
   "password": "123456"
 }
@@ -12,7 +12,7 @@ Content-Type: application/json
 ###
 
 # Get user by ID
-GET http://localhost:3333/api/auth/ada44033-5a4e-49ee-add5-8b16e6d3f9dd HTTP/1.1
+GET http://localhost:3333/api/auth/e44b0aff-f12a-40bc-b792-54d17299da39 HTTP/1.1
 
 ###
 
@@ -21,7 +21,7 @@ POST http://localhost:3333/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user1@notfound.local",
+  "email": "user@notfound.local",
   "password": "123456"
 }
 
