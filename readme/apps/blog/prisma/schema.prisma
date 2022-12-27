@@ -17,19 +17,19 @@ model Post {
   type             String
   createdAt        DateTime @default(now())
   publishAt        DateTime @default(now())
-  isRepost         Boolean
-  primaryId        String
-  primaryAuthor    String
-  tags             String[]
-  titlePost        String
-  previewPost      String
-  textPost         String
-  quote            String
-  authorQuote      String
-  photoLink        String
-  videoLink        String
-  linkURL          String
-  linkDescription  String
+  isRepost         Boolean  @default(false)
+  primaryId        String?
+  primaryAuthor    String?
+  tags             String[] @default([])
+  titlePost        String?
+  previewPost      String?
+  textPost         String?
+  quote            String?
+  authorQuote      String?
+  photoLink        String?
+  videoLink        String?
+  linkURL          String?
+  linkDescription  String?
   comments         Comment[]
  }
 
