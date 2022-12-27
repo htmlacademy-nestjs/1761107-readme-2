@@ -10,9 +10,9 @@ export class CreateCommentDto {
 
   @ApiProperty({
     description: 'postId',
-    example: '1234567890'
+    example: 1234567890
   })
-  public postId: string;
+  public postId: number;
 
   @ApiProperty({
     description: 'text of comment, min 10, max  300',

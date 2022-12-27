@@ -7,14 +7,14 @@ import { CreatePostQuoteDto } from './dto/create-post-quote.dto';
 import { CreatePostTextDto } from './dto/create-post-text.dto';
 import { CreatePostVideoDto } from './dto/create-post-video.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { PostMemoryRepository } from './post-memory.repository';
 import { PostEntity } from './post.entity';
+import { PostRepository } from './post.repository';
 
 @Injectable()
 export class PostService {
 
   constructor(
-    private readonly postRepository: PostMemoryRepository
+    private readonly postRepository: PostRepository
   ) { }
 
   private postEntity: PostEntity;
@@ -102,21 +102,23 @@ export class PostService {
 
   }
 
-  async getPost(id: string) {
+  async getPost(id: number) {
     return this.postRepository.findById(id);
   }
 
-  async deletePost(id: string) {
+  async deletePost(id: number) {
     return this.postRepository.destroy(id);
   }
 
-  async updatePost(id: string, dto: UpdatePostDto) {
+  async updatePost(id: number, dto: UpdatePostDto) {
     const existPost = await this.postRepository.findById(id);
     const updatedPost = Object.assign(existPost, dto);
     if (!existPost) {
       throw new Error('Post not found');
     }
-    const post = new PostEntity(updatedPost);
+
+    const type = updatedPost.type as keyof typeof PostType;
+    const post = new PostEntity({...updatedPost, type: PostType[type]});
     return this.postRepository.update(id, post);
   }
 

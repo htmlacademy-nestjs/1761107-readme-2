@@ -2,7 +2,7 @@ import { Post, PostType } from '@readme/shared-types';
 
 export class PostEntity implements Post {
 
-  _id?: string;
+  id?: number;
   userId: string;
   type: PostType;
   publishAt?: Date;
@@ -30,7 +30,7 @@ export class PostEntity implements Post {
   }
 
   public fillEntity(post: Post) {
-    this._id = post._id;
+    this.id = post.id;
     this.userId = post.userId;
     this.type = post.type;
     this.publishAt = post.publishAt;
