@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CRUDRepository } from '@readme/core';
 import { PostEntity } from './post.entity';
 import { Post as PrismaPost } from '@prisma/client';
@@ -12,9 +12,10 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Prisma
   ) { }
 
   public async create(item: PostEntity): Promise<PrismaPost> {
+    Logger.log(item);
+    const entityData = { ...item.toObject(), type: item.type.toString() };
 
-    const entityData = { ...item.toObject(), type: item.type.toString(), id: 123 };
-
+    Logger.log(entityData);
     const post = await this.prisma.post.create({
       data: {
         ...entityData as PrismaPost
@@ -47,11 +48,16 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Prisma
   }
 
   public async destroy(id: number): Promise<void> {
+
     await this.prisma.post.delete({
       where: {
         id,
+      },
+      include: {
+        comments: true,
       }
     });
+
   }
 
   public async getPosts(): Promise<PrismaPost[]> {

@@ -32,24 +32,25 @@ export class CommentRepository implements CRUDRepository<CommentEntity, number, 
 
   public async create(item: CommentEntity): Promise<PrismaComment> {
     const entry = item.toObject();
-
+    const {postId, userId, text} = entry;
     return this.prisma.comment.create(
       {
-        data: {...entry, id: 123},
-        include: {
+        data: {
+          userId,
+          text,
           post: {
-            select: {
-              id: true,
+            connect: {
+              id: postId
             }
-          },
+          }
+          }
         }
-      }
     );
 
   }
 
   public async destroy(id: number): Promise<void> {
-    await this.prisma.post.delete({
+    await this.prisma.comment.delete({
       where: {
         id,
       }

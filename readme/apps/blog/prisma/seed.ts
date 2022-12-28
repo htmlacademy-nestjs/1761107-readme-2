@@ -21,6 +21,18 @@ async function fillDb() {
             text: 'bla bla bla',
             userId: '111'
           },
+          {
+            text: 'bla bla bla1',
+            userId: '111'
+          },
+          {
+            text: 'bla bla bla2',
+            userId: '111'
+          },
+          {
+            text: 'bla bla bla3',
+            userId: '111'
+          },
         ]
       },
     }

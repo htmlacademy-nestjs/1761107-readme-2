@@ -26,12 +26,12 @@ export class CommentService {
       .create(commentEntity);
   }
 
-  async getComment(id: number) {
-    return this.commentRepository.findById(id);
+  async getCommentsByPostId(id: string) {
+    return this.commentRepository.findById(Number(id));
   }
 
-  async deleteComment(id: number) {
-    return this.commentRepository.destroy(id);
+  async deleteComment(id: string) {
+    return this.commentRepository.destroy(Number(id));
   }
 
 }

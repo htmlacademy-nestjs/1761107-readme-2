@@ -7,7 +7,6 @@ import { CreatePostQuoteDto } from './dto/create-post-quote.dto';
 import { CreatePostTextDto } from './dto/create-post-text.dto';
 import { CreatePostVideoDto } from './dto/create-post-video.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { PostEntity } from './post.entity';
 import { PostService } from './post.service';
 import { PostRdo } from './rdo/post.rdo';
 
