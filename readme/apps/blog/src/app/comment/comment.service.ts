@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { CommentMemoryRepository } from './comment-memory.repository';
 import { CommentEntity } from './comment.entity';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import * as dayjs from 'dayjs';
+import { CommentRepository } from './comment.repository';
 
 @Injectable()
 export class CommentService {
   constructor(
-    private readonly commentRepository: CommentMemoryRepository
+    private readonly commentRepository: CommentRepository
   ) {}
 
   async createComment(dto: CreateCommentDto) {
     const { userId, postId, text } = dto;
     const newComment = {
-      _id: '1',
+      id: 1,
       createdAt: dayjs().toDate(),
       userId,
       postId,
@@ -26,12 +26,12 @@ export class CommentService {
       .create(commentEntity);
   }
 
-  async getComment(id: string) {
-    return this.commentRepository.findById(id);
+  async getCommentsByPostId(id: string) {
+    return this.commentRepository.findById(Number(id));
   }
 
   async deleteComment(id: string) {
-    return this.commentRepository.destroy(id);
+    return this.commentRepository.destroy(Number(id));
   }
 
 }

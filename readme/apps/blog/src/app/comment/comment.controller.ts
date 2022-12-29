@@ -39,7 +39,7 @@ export class CommentController {
     description: 'Comment found'
   })
   async show(@Param('id') id: string) {
-    const existComment = await this.commentService.getComment(id);
+    const existComment = await this.commentService.getCommentsByPostId(id);
     return fillObject(CommentRdo, existComment);
   }
 }
